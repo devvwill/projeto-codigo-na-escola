@@ -8,7 +8,7 @@ import Login from './pages/Login'
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = useCallback(() => setMenuOpen(false), [])
-  const mostrarLogin = true
+  const mostrarLogin = false
 
   if (mostrarLogin) {
     return <Login />
