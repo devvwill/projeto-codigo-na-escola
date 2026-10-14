@@ -34,7 +34,7 @@ export default function Login() {
 
   return (
     <main className="grid min-h-screen min-h-dvh lg:grid-cols-[0.95fr_1.05fr]">
-      <section aria-labelledby="login-titulo" className="flex min-w-0 flex-col px-5 py-7 sm:px-10 lg:px-12 lg:py-10 xl:px-16">
+      <section aria-labelledby="login-titulo" className="flex min-w-0 flex-col px-4 py-6 sm:px-10 lg:px-12 lg:py-10 xl:px-16">
         <header className="flex items-center gap-3 font-extrabold">
           <span aria-hidden="true" className="grid size-9 shrink-0 place-items-center rounded-xl bg-linear-to-br from-acc to-sec font-mono text-sm text-bg">
             {'</>'}
@@ -42,7 +42,7 @@ export default function Login() {
           <span className="text-lg">Código na Escola</span>
         </header>
 
-        <div className="entrada-suave mx-auto my-auto w-full max-w-md py-12 lg:py-16">
+        <div className="entrada-suave mx-auto my-auto w-full max-w-md py-8 sm:py-12 lg:py-16">
           <h1 id="login-titulo" className="text-4xl font-extrabold tracking-tight sm:text-5xl">
             Bora programar?
           </h1>
@@ -61,7 +61,7 @@ export default function Login() {
                 autoCapitalize="none"
                 spellCheck={false}
                 required
-                placeholder="Ex.: 2024123456 ou nome@escola.gov.br"
+                placeholder="Sua matrícula ou e-mail"
                 className={inputClassName}
                 onInput={(event) => {
                   event.currentTarget.setCustomValidity('')
@@ -97,7 +97,7 @@ export default function Login() {
               </div>
             </div>
 
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm">
+            <div className="mt-5 flex flex-col items-start gap-1 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-4">
               <label className="flex min-h-11 cursor-pointer items-center gap-2.5">
                 <input
                   type="checkbox"

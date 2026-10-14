@@ -1,9 +1,13 @@
+import { useCallback, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Topbar from './components/Topbar'
+import MobileMenu from './components/MobileMenu'
 import Inicio from './pages/Inicio'
 import Login from './pages/Login'
 
 export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const closeMenu = useCallback(() => setMenuOpen(false), [])
   const mostrarLogin = true
 
   if (mostrarLogin) {
@@ -15,9 +19,9 @@ export default function App() {
       <Sidebar />
 
       <div className="flex min-w-0 flex-col">
-        <Topbar />
+        <Topbar menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} />
 
-        <main className="w-full max-w-6xl flex-1 p-4 md:p-8">
+        <main id="conteudo-principal" tabIndex={-1} className="w-full max-w-6xl flex-1 p-4 md:p-8">
           <Inicio />
         </main>
 
@@ -25,6 +29,7 @@ export default function App() {
           © 2026 Código na Escola · Projeto educativo e gratuito para estudantes da rede pública.
         </footer>
       </div>
+      <MobileMenu open={menuOpen} onClose={closeMenu} />
     </div>
   )
 }

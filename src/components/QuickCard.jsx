@@ -4,7 +4,7 @@ export default function QuickCard({ icone: Icone, titulo, texto, cor = 'text-acc
       <span className={`grid size-10 shrink-0 place-items-center rounded-xl bg-tag ${cor}`}>
         <Icone className="size-6" strokeWidth={1.75} />
       </span>
-      <span className="flex flex-col">
+      <span className="flex min-w-0 flex-col wrap-break-word">
         <b className="text-[17px]">{titulo}</b>
         <span className="text-sm text-muted">{texto}</span>
       </span>
