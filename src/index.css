@@ -133,3 +133,14 @@ body {
     animation: preencher-barra 800ms ease-out 280ms backwards;
   }
 }
+
+/* Lesson interactions keep their position; filters never reanimate the list. */
+@media (prefers-reduced-motion: no-preference) {
+  .aulas-entrada {
+    animation: entrada-suave 260ms ease-out var(--aulas-atraso, 0ms) backwards;
+  }
+  .aula-progresso {
+    transform-origin: left;
+    animation: preencher-barra 600ms ease-out 100ms backwards;
+  }
+}

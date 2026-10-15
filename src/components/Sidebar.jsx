@@ -1,6 +1,6 @@
 import Navigation from './Navigation'
 
-export default function Sidebar() {
+export default function Sidebar({ pagina }) {
   return (
     <aside className="sticky top-0 hidden h-screen h-dvh flex-col gap-1 overflow-y-auto border-r border-line bg-side px-4 py-7 md:flex">
       <div className="flex items-center gap-2.5 pb-7 font-extrabold">
@@ -10,7 +10,7 @@ export default function Sidebar() {
         Código na Escola
       </div>
 
-      <Navigation />
+      <Navigation pagina={pagina} />
     </aside>
   )
 }

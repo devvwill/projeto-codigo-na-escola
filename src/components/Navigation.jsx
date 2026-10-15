@@ -1,7 +1,7 @@
-function NavItem({ children, active = false, onNavigate }) {
+function NavItem({ children, active = false, href = '#', onNavigate }) {
   return (
     <a
-      href={active ? '#conteudo-principal' : '#'}
+      href={href}
       onClick={onNavigate}
       aria-current={active ? 'page' : undefined}
       className={`min-h-11 rounded-xl px-3.5 py-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acc motion-safe:transition-colors motion-safe:duration-150 ${
@@ -13,11 +13,11 @@ function NavItem({ children, active = false, onNavigate }) {
   )
 }
 
-export default function Navigation({ onNavigate }) {
+export default function Navigation({ onNavigate, pagina = 'inicio' }) {
   return (
     <nav aria-label="Menu principal" className="flex flex-1 flex-col gap-1">
-      <NavItem active onNavigate={onNavigate}>Início</NavItem>
-      <NavItem onNavigate={onNavigate}>Aulas</NavItem>
+      <NavItem href="#/inicio" active={pagina === 'inicio'} onNavigate={onNavigate}>Início</NavItem>
+      <NavItem href="#/aulas" active={pagina === 'aulas'} onNavigate={onNavigate}>Aulas</NavItem>
       <NavItem onNavigate={onNavigate}>Materiais</NavItem>
 
       <div className="mt-auto flex flex-col gap-1 pt-8">
