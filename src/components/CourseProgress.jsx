@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import Button from './Button'
 
-export default function CourseProgress({ curso, aula, duracao, progresso }) {
+export default function CourseProgress({ curso, aula, duracao, progresso, aulaId = 'variaveis' }) {
   return (
     <section aria-labelledby="curso-atual-titulo" className="entrada-suave rounded-2xl border border-acc/30 bg-soft/50 p-5 sm:p-6">
       <p className="text-xs font-bold tracking-wider text-acc uppercase">Curso em andamento</p>
@@ -16,7 +16,7 @@ export default function CourseProgress({ curso, aula, duracao, progresso }) {
           <p className="mt-1 text-sm text-muted">{duracao} de aula</p>
         </div>
 
-        <Button aria-label={`Continuar aula: ${aula}`} className="flex items-center justify-center gap-2 sm:shrink-0 sm:self-center">
+        <Button onClick={() => { window.location.hash = `#/aula/${aulaId}` }} aria-label={`Continuar aula: ${aula}`} className="flex items-center justify-center gap-2 sm:shrink-0 sm:self-center">
           Continuar aula
           <ArrowRight aria-hidden="true" className="size-4" />
         </Button>

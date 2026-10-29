@@ -14,7 +14,7 @@ const mensagens = {
   criar: 'O cadastro ainda não está disponível nesta demonstração. Para obter acesso, peça orientação à sua escola.',
 }
 
-export default function Login() {
+export default function Login({ professor = false }) {
   const [mostrarSenha, setMostrarSenha] = useState(false)
   const [aviso, setAviso] = useState('')
 
@@ -44,24 +44,24 @@ export default function Login() {
 
         <div className="entrada-suave mx-auto my-auto w-full max-w-md py-8 sm:py-12 lg:py-16">
           <h1 id="login-titulo" className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Bora programar?
+            {professor ? 'Área do professor' : 'Bora programar?'}
           </h1>
-          <p className="mt-3 text-lg text-muted">Continue de onde você parou.</p>
+          <p className="mt-3 text-lg text-muted">{professor ? 'Entre para acompanhar suas turmas.' : 'Continue de onde você parou.'}</p>
 
           <form className="mt-10" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="login-identificacao" className="mb-2 block text-sm font-bold">
-                Matrícula ou e-mail
+                {professor ? 'E-mail do professor' : 'Matrícula ou e-mail'}
               </label>
               <input
                 id="login-identificacao"
                 name="identificacao"
-                type="text"
+                type={professor ? 'email' : 'text'}
                 autoComplete="username"
                 autoCapitalize="none"
                 spellCheck={false}
                 required
-                placeholder="Sua matrícula ou e-mail"
+                placeholder={professor ? 'Seu e-mail cadastrado' : 'Sua matrícula ou e-mail'}
                 className={inputClassName}
                 onInput={(event) => {
                   event.currentTarget.setCustomValidity('')
@@ -106,7 +106,7 @@ export default function Login() {
                 />
                 Manter conectado
               </label>
-              <button type="button" className={linkClassName} onClick={() => setAviso(mensagens.recuperar)}>
+              <button type="button" className={linkClassName} onClick={() => setAviso(professor ? 'Peça ao responsável pelo sistema para recuperar seu acesso de professor.' : mensagens.recuperar)}>
                 Esqueci minha senha
               </button>
             </div>
@@ -117,25 +117,33 @@ export default function Login() {
             >
               Entrar
             </button>
-            <button
+            {!professor && <button
               type="button"
               className="ui-button mt-3 w-full rounded-2xl border border-line px-5 py-4 font-bold hover:border-acc hover:bg-soft focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acc"
               onClick={() => setAviso(mensagens.escola)}
             >
               Entrar com conta da escola
-            </button>
+            </button>}
 
-            <p className="mt-6 flex flex-wrap items-center justify-center gap-x-1 text-sm text-muted">
+            {!professor && <p className="mt-6 flex flex-wrap items-center justify-center gap-x-1 text-sm text-muted">
               Primeiro acesso?
               <button type="button" className={linkClassName} onClick={() => setAviso(mensagens.criar)}>
                 Criar minha conta
               </button>
-            </p>
+            </p>}
 
             <div role="status" aria-live="polite" aria-atomic="true">
               {aviso && <p className="mt-4 rounded-xl border border-line bg-soft p-4 text-sm leading-relaxed text-muted">{aviso}</p>}
             </div>
           </form>
+          {professor ? <>
+            <p className="mt-5 text-center text-xs leading-5 text-muted">Demonstração da área do professor. A autenticação será integrada posteriormente.</p>
+            <a href="#/professor/turmas" className="mt-4 block rounded-lg py-3 text-center text-sm font-bold text-acc hover:underline focus-visible:outline-2 focus-visible:outline-acc">Explorar demonstração do professor</a>
+            <a href="#/login" className="mt-4 block rounded-lg py-3 text-center text-sm font-bold text-acc focus-visible:outline-2 focus-visible:outline-acc">Voltar ao acesso de alunos</a>
+          </> : <>
+            <a href="#/inicio" className="mt-4 block rounded-lg py-3 text-center text-sm font-bold text-acc hover:underline focus-visible:outline-2 focus-visible:outline-acc">Explorar demonstração</a>
+            <a href="#/professor/entrar" className="block rounded-lg py-3 text-center text-sm text-muted hover:text-ink focus-visible:outline-2 focus-visible:outline-acc">Acesso de professor</a>
+          </>}
         </div>
       </section>
 

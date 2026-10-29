@@ -19,6 +19,7 @@ export default function Navigation({ onNavigate, pagina = 'inicio' }) {
       <NavItem href="#/inicio" active={pagina === 'inicio'} onNavigate={onNavigate}>Início</NavItem>
       <NavItem href="#/aulas" active={pagina === 'aulas'} onNavigate={onNavigate}>Aulas</NavItem>
       <NavItem onNavigate={onNavigate}>Materiais</NavItem>
+      <NavItem href="#/painel" active={pagina === 'painel'} onNavigate={onNavigate}>Meu painel</NavItem>
 
       <div className="mt-auto flex flex-col gap-1 pt-8">
         <NavItem onNavigate={onNavigate}>Ajuda</NavItem>

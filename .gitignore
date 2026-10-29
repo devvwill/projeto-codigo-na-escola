@@ -17,3 +17,6 @@ Thumbs.db
 
 # O lockfile utilizado pelo projeto fica na raiz
 /src/package-lock.json
+
+# Dados locais
+.data/

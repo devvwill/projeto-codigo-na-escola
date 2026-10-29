@@ -1,4 +1,6 @@
 import Button from '../components/Button'
+import { useLearning } from '../hooks/useLearning'
+import { aulas } from '../data/aulas'
 import Card from '../components/Card'
 import CourseProgress from '../components/CourseProgress'
 import QuickAccess from '../components/QuickAccess'
@@ -14,12 +16,7 @@ const dias = [
 ]
 const diasEstudados = 5
 
-const cursoEmAndamento = {
-  curso: 'Lógica de programação',
-  aula: 'O que é um algoritmo?',
-  duracao: '12 min',
-  progresso: 40,
-}
+
 
 const avisos = [
   'Prova de lógica na sexta-feira.',
@@ -28,10 +25,13 @@ const avisos = [
 ]
 
 export default function Inicio() {
+  const { perfil, concluidas } = useLearning()
+  const atual = aulas.find(a => a.estado === 'emAndamento' && !concluidas.includes(a.id)) ?? aulas.find(a => !concluidas.includes(a.id)) ?? aulas[0]
+  const cursoEmAndamento = { curso: atual.modulo === 'Lógica' ? 'Lógica de programação' : atual.modulo, aula: atual.titulo, aulaId: atual.id, duracao: `${atual.minutos} min`, progresso: concluidas.includes(atual.id) ? 100 : atual.progresso }
   return (
     <>
       <header className="mb-5">
-        <h1 className="text-xl font-extrabold tracking-tight sm:text-2xl">Olá, Will! Vamos continuar?</h1>
+        <h1 className="text-xl font-extrabold tracking-tight sm:text-2xl">Olá, {perfil.nome}! Vamos continuar?</h1>
       </header>
 
       <CourseProgress {...cursoEmAndamento} />

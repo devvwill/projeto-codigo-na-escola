@@ -1,16 +1,18 @@
 import { useState } from 'react'
+import { useLearning } from '../hooks/useLearning'
 import { CirclePlay } from 'lucide-react'
-import { aulas, modulos } from '../data/aulas'
+import { aulas as aulasIniciais, modulos } from '../data/aulas'
 import LessonRow, { LessonAction, lessonControl } from '../components/LessonRow'
 
 const normalizar = (texto) => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR')
 
 export default function Aulas({ busca = '' }) {
+  const { concluidas: idsConcluidos } = useLearning()
+  const aulas = aulasIniciais.map(a => idsConcluidos.includes(a.id) ? { ...a, estado: 'concluida', progresso: 100 } : a)
   const [categoria, setCategoria] = useState('Todas')
   const [status, setStatus] = useState('Todas')
   const [favoritos, setFavoritos] = useState(() => new Set(['pagina']))
-  const [aviso, setAviso] = useState('')
-  const atual = aulas.find((aula) => aula.estado === 'emAndamento')
+  const atual = aulas.find((aula) => aula.estado === 'emAndamento') ?? aulas.find(aula => aula.estado !== 'concluida') ?? aulas[0]
   const concluidas = aulas.filter((aula) => aula.estado === 'concluida').length
   const visiveis = aulas.filter((aula) => (categoria === 'Todas' || aula.modulo === categoria) && (status === 'Todas' || aula.estado === status) && normalizar(`${aula.titulo} ${aula.modulo}`).includes(normalizar(busca.trim())))
 
@@ -23,14 +25,14 @@ export default function Aulas({ busca = '' }) {
     })
   }
   function abrir(aula) {
-    setAviso(`“${aula.titulo}”: a reprodução da aula ainda não está disponível nesta demonstração.`)
+    window.location.hash = `#/aula/${aula.id}`
   }
 
   return (
     <div className="aulas-page">
       <header className="aulas-entrada mb-5">
-        <h1 className="text-3xl font-extrabold tracking-tight">Aulas</h1>
-        <p className="mt-1 text-muted">{aulas.length} aulas · {concluidas} concluída</p>
+        <h1 className="page-title">Aulas</h1>
+        <p className="mt-1 text-muted">{aulas.length} aulas · {concluidas} {concluidas === 1 ? 'concluída' : 'concluídas'}</p>
       </header>
 
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
@@ -67,7 +69,6 @@ export default function Aulas({ busca = '' }) {
       </section>
 
       <div role="status" aria-live="polite" aria-atomic="true" className="mb-4 text-sm text-muted">
-        {aviso && <p className="mb-4 rounded-xl border border-line bg-soft p-4">{aviso}</p>}
         {(busca || categoria !== 'Todas' || status !== 'Todas') && <p>{visiveis.length} {visiveis.length === 1 ? 'aula encontrada' : 'aulas encontradas'}.</p>}
       </div>
       {visiveis.length === 0 && <p className="rounded-2xl border border-line p-6 text-muted">Nenhuma aula encontrada. Tente outra busca ou altere os filtros.</p>}
@@ -76,7 +77,7 @@ export default function Aulas({ busca = '' }) {
         const todas = aulas.filter((aula) => aula.modulo === modulo)
         return <section key={modulo} hidden={!lista.length} aria-labelledby={`modulo-${modulo}`} className="mb-6">
           <header className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-            <h2 id={`modulo-${modulo}`} className="text-lg font-bold">{modulo}</h2>
+            <h2 id={`modulo-${modulo}`} className="section-title">{modulo}</h2>
             <p className="text-sm text-muted">{todas.filter((aula) => aula.estado === 'concluida').length} de {todas.length} aulas concluídas</p>
           </header>
           <ul>{lista.map((aula) => <LessonRow key={aula.id} aula={aula} favorito={favoritos.has(aula.id)} onFavorite={favoritar} onOpen={abrir} />)}</ul>

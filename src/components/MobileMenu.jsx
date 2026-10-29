@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
 import Navigation from './Navigation'
 
-export default function MobileMenu({ open, onClose, pagina }) {
+export default function MobileMenu({ open, onClose, pagina, children }) {
   const dialogRef = useRef(null)
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function MobileMenu({ open, onClose, pagina }) {
             <X aria-hidden="true" className="size-5" />
           </button>
         </header>
-        <Navigation pagina={pagina} onNavigate={onClose} />
+        {children || <Navigation pagina={pagina} onNavigate={onClose} />}
       </div>
     </dialog>
   )
