@@ -14,3 +14,4 @@ export const aulas = [
   { id: 'comandos', modulo: 'JavaScript', titulo: 'Primeiros comandos', minutos: 20, estado: 'naoIniciada', progresso: 0 },
   { id: 'eventos', modulo: 'JavaScript', titulo: 'Eventos e botões', minutos: 24, estado: 'naoIniciada', progresso: 0 },
 ]
+ 
